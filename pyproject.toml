@@ -1,0 +1,94 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sarsim0"
+version = "0.1.0"
+description = "Synthetic time-series simulation library inspired by the SarSim0 zero-shot forecasting paper."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+keywords = [
+  "forecasting",
+  "sarima",
+  "simulation",
+  "synthetic-data",
+  "time-series",
+  "zero-shot",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+]
+dependencies = [
+  "numba>=0.59",
+  "numpy>=1.24",
+  "scipy>=1.11",
+  "torch>=2.1",
+]
+
+[project.optional-dependencies]
+test = [
+  "pytest>=8.0",
+]
+dev = [
+  "build>=1.2.1",
+  "pytest>=8.0",
+  "ruff>=0.15.0",
+  "ty",
+  "twine>=5.0",
+]
+
+[dependency-groups]
+test = [
+  "pytest>=8.0",
+]
+lint = [
+  "ruff>=0.15.0",
+  "ty",
+]
+dev = [
+  { include-group = "test" },
+  { include-group = "lint" },
+  "build>=1.2.1",
+  "twine>=5.0",
+]
+
+[tool.uv]
+default-groups = ["dev"]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["sarsim0*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+src = ["sarsim0", "tests"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ty.environment]
+python-version = "3.10"
+root = ["."]
+
+[tool.ty.src]
+include = ["sarsim0", "tests"]
