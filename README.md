@@ -293,3 +293,14 @@ If you use this repository, cite the original paper:
     url={https://openreview.net/forum?id=ZOLUTSU5gk}
 }
 ```
+
+And cite this code repository:
+
+```bibtex
+@software{Rasul_sarsim0,
+    author = {Rasul, Kashif},
+    license = {Apache-2.0},
+    title = {{sarsim0}},
+    url = {https://github.com/kashif/sarsim0}
+}
+```
