@@ -33,6 +33,14 @@ class TestPoles:
         magnitudes = np.abs(poles)
         assert np.all(magnitudes <= r_max)
 
+    def test_sample_poles_are_area_uniform_in_radius(self, numpy_rng):
+        """Mean radius should match uniform sampling by area, not by radius."""
+        r_max = 0.9
+        poles = sample_poles(200000, r_max, numpy_rng)
+        mean_radius = np.abs(poles).mean()
+        expected_mean = (2.0 / 3.0) * r_max
+        assert abs(mean_radius - expected_mean) < 0.01
+
     def test_poles_to_coeffs_empty(self):
         """Test conversion with no poles."""
         coeffs = poles_to_coeffs(np.array([]))

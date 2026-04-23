@@ -22,10 +22,11 @@ from .config import SarSimConfig
 
 
 def sample_poles(n_poles: int, r_max: float, rng: np.random.Generator) -> np.ndarray:
-    """Sample poles uniformly within unit circle."""
+    """Sample poles uniformly by area within a disk of radius ``r_max``."""
     if n_poles == 0:
         return np.array([], dtype=np.complex128)
-    r = rng.uniform(0, r_max, size=n_poles)
+    # Draw radius from the correct area-uniform distribution: r^2 ~ Uniform(0, r_max^2).
+    r = np.sqrt(rng.uniform(0.0, r_max**2, size=n_poles))
     theta = rng.uniform(0, 2 * np.pi, size=n_poles)
     return r * np.exp(1j * theta)
 
