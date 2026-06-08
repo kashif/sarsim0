@@ -45,6 +45,13 @@ def generate_sarsim0_batch(
     Returns:
         Tensor of shape (batch_size, length - burn_in)
     """
+    # Generate on CPU, move to the requested device once at the end. The generator
+    # is a CPU generator, and several sub-calls draw seeds via device-less
+    # torch.randint() (CPU); a CUDA `device` here would mismatch the generator
+    # ("Expected a 'cpu'/'cuda' device type for generator ...").
+    out_device = device
+    device = torch.device("cpu")
+
     # Step 1 & 2: Decide SARIMA vs SARIMA-2 per series, then generate each group.
     # SARIMA-2 series use generate_sarima2_paired_batch so both the base and the
     # envelope are drawn with a paired seasonality from config.seasonality_pairs
@@ -69,7 +76,7 @@ def generate_sarsim0_batch(
     # Step 4: Remove burn-in
     y = y[:, config.burn_in :]
 
-    return y
+    return y.to(out_device)
 
 
 class SarSim0Dataset(IterableDataset):
